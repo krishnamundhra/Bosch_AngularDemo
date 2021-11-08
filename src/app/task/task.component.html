@@ -1,0 +1,140 @@
+<div class="container">
+    <div>
+        <button class="btn btn-md btn-outline-primary" (click)="openAdd(contentAdd)">
+          <i class="fa fa-plus"></i>Create Tasks</button>
+    </div>
+
+    <table class="table table-bordered table-striped table-class">
+      <thead>
+      <tr>
+        <th>Task ID</th>
+        <th>Task name</th>
+        <th>Project</th>
+        <th>Comments</th>
+        <th>Task Edit</th>
+        <th>Task Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let task of tasks">
+        <td><span>{{task.id}}</span></td>
+        <td><span>{{task.taskname}}</span></td>
+        <td><span>{{task.project}}</span></td>
+        <td><span>{{task.comments}}</span></td>
+        <td><span><button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, task)">
+          <i class="fa fa-edit"></i>Edit</button></span></td>
+        <td><span><button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, task)">
+          <i class="fa fa-remove"></i>Delete</button></span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  
+  <!-- Create Tasks Modal -->
+  <ng-template #contentAdd let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Task</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <div class="form-group">
+          <label for="taskname">Task Name</label>
+          <div class="input-group">
+            <input id="taskname" name="taskname" class="form-control" ngModel>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="project">Project</label>
+          <div class="input-group">
+            <select id="project" name="project" class="form-control" ngModel>
+              <option>Java Project</option>
+              <option>Angular Project</option>
+              <option>.NET Project</option>
+              <option>AWS Project</option>
+              <option>Python Project</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="comments">Comments</label>
+          <div class="input-group">
+            <textarea type="text" id="comments" name="comments" class="form-control" ngModel></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div> 
+        <button data-dismiss="modal" class="btn" (click)="modal.close('Cancel click')">Cancel</button> </div>
+        <button data-dismiss="modal" class="btn btn-info" >Create</button>
+    </div>
+  </ng-template>
+
+
+
+<!-- Edit Tasks Modal -->
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Task</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" novalidate>
+      <div class="form-group">
+        <label for="id">ID</label>
+        <div class="input-group">
+          <input formControlName="id" class="form-control" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="taskname">Task Name</label>
+        <div class="input-group">
+          <input formControlName="taskname" class="form-control" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="project">Project</label>
+        <div class="input-group">
+          <input formControlName="project" class="form-control" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="comments">Comments</label>
+        <div class="input-group">
+          <input formControlName="comments" class="form-control" >
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div> <button data-dismiss="modal" class="btn btn-primary" (click)="onSave()">Save Changes</button> </div>
+  </div>
+</ng-template>
+
+
+
+<!-- Delete Tasks Modal -->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Delete Task</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2>Are you sure you want to delete this task.</h2>
+    <div class="border text-center"> 
+      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button> 
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+  </div>
+</ng-template>
